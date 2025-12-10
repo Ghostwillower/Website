@@ -401,6 +401,16 @@ body {
     gap: 0.5rem;
     color: var(--text-secondary);
     font-size: 0.875rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.scroll-indicator:hover {
+    color: var(--accent-primary);
+    transform: translateX(-50%) scale(1.1);
 }
 
 .scroll-arrow {
@@ -568,6 +578,11 @@ body {
     box-shadow: var(--shadow-xl);
 }
 
+.interest-card.interest-active {
+    border: 2px solid var(--accent-primary);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+}
+
 .interest-icon {
     font-size: 3rem;
     margin-bottom: 1rem;
@@ -668,6 +683,12 @@ body {
     align-items: center;
     gap: 0.5rem;
     transition: all 0.3s ease;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 1rem;
+    font-family: inherit;
 }
 
 .project-link:hover {
@@ -714,6 +735,7 @@ body {
     border-radius: 50%;
     color: var(--text-primary);
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .social-link:hover {

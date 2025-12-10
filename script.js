@@ -146,10 +146,10 @@ window.addEventListener('scroll', throttle(handleScroll, 16));
 
 const typingText = document.querySelector('.typing-text');
 const phrases = [
-    'Creative. Developer. Dreamer.',
-    'Building amazing experiences.',
-    'Turning ideas into reality.',
-    'Always learning, always growing.'
+    'Developer. Gamer. Creator.',
+    'Building tools that automate.',
+    'From mobile apps to Minecraft mods.',
+    'TypeScript, Python, Java, and more.'
 ];
 let phraseIndex = 0;
 let charIndex = 0;
@@ -380,3 +380,92 @@ const createScrollIndicator = () => {
 
 // Uncomment to enable scroll progress indicator
 // createScrollIndicator();
+
+// ==================== //
+// Scroll Indicator Click
+// ==================== //
+
+const scrollIndicator = document.getElementById('scrollIndicator');
+if (scrollIndicator) {
+    scrollIndicator.addEventListener('click', () => {
+        const aboutSection = document.getElementById('about');
+        if (aboutSection) {
+            const navHeight = document.querySelector('.nav-container').offsetHeight;
+            const targetPosition = aboutSection.offsetTop - navHeight - 20;
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
+    });
+}
+
+// ==================== //
+// Notification System
+// ==================== //
+
+function showNotification(message) {
+    // Remove existing notification if present
+    const existingNotification = document.querySelector('.notification-toast');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = 'notification-toast';
+    notification.textContent = message;
+    notification.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%) translateY(100px);
+        background: var(--gradient-1);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        font-weight: 500;
+        z-index: 10000;
+        box-shadow: var(--shadow-xl);
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        opacity: 0;
+        max-width: 90%;
+        text-align: center;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Trigger animation
+    requestAnimationFrame(() => {
+        notification.style.transform = 'translateX(-50%) translateY(0)';
+        notification.style.opacity = '1';
+    });
+    
+    // Remove after delay
+    setTimeout(() => {
+        notification.style.transform = 'translateX(-50%) translateY(100px)';
+        notification.style.opacity = '0';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+// ==================== //
+// Interest Card Click
+// ==================== //
+
+const interestCards = document.querySelectorAll('.interest-card');
+interestCards.forEach(card => {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', () => {
+        // Toggle active state
+        const isActive = card.classList.contains('interest-active');
+        
+        // Remove active state from all cards
+        interestCards.forEach(c => c.classList.remove('interest-active'));
+        
+        // Add active state to clicked card if it wasn't active
+        if (!isActive) {
+            card.classList.add('interest-active');
+        }
+    });
+});
