@@ -92,15 +92,31 @@ document.querySelectorAll('.section, .interest-card, .project-card, .stat-card')
 });
 
 // ==================== //
-// Navbar Scroll Effect
+// Navbar Scroll Effect & Parallax
 // ==================== //
 
 let lastScroll = 0;
 const nav = document.querySelector('.nav-container');
+const hero = document.querySelector('.hero-background');
+const floatingCards = document.querySelectorAll('.floating-card');
 
-window.addEventListener('scroll', () => {
+// Throttle function for performance
+function throttle(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+const handleScroll = () => {
     const currentScroll = window.pageYOffset;
     
+    // Navbar effect
     if (currentScroll > 100) {
         nav.style.padding = '0.5rem 0';
         nav.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
@@ -109,8 +125,20 @@ window.addEventListener('scroll', () => {
         nav.style.boxShadow = 'none';
     }
     
+    // Parallax effect for hero
+    if (hero) {
+        hero.style.transform = `translateY(${currentScroll * 0.5}px)`;
+    }
+    
+    floatingCards.forEach((card, index) => {
+        const speed = 0.1 + (index * 0.05);
+        card.style.transform = `translateY(${currentScroll * speed}px)`;
+    });
+    
     lastScroll = currentScroll;
-});
+};
+
+window.addEventListener('scroll', throttle(handleScroll, 16));
 
 // ==================== //
 // Typing Effect for Hero
@@ -156,24 +184,7 @@ function typeEffect() {
 // Start typing effect
 setTimeout(typeEffect, 1000);
 
-// ==================== //
-// Parallax Effect for Hero
-// ==================== //
 
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero-background');
-    const floatingCards = document.querySelectorAll('.floating-card');
-    
-    if (hero) {
-        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-    }
-    
-    floatingCards.forEach((card, index) => {
-        const speed = 0.1 + (index * 0.05);
-        card.style.transform = `translateY(${scrolled * speed}px)`;
-    });
-});
 
 // ==================== //
 // Dynamic Year in Footer
@@ -183,7 +194,8 @@ const updateYear = () => {
     const yearElement = document.querySelector('.footer-content p');
     if (yearElement) {
         const currentYear = new Date().getFullYear();
-        yearElement.innerHTML = yearElement.innerHTML.replace('2024', currentYear);
+        const text = yearElement.textContent;
+        yearElement.textContent = text.replace(/\d{4}/, currentYear);
     }
 };
 
