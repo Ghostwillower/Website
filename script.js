@@ -82,6 +82,93 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     const addUserForm = document.getElementById('addUserForm');
     const addUserMessage = document.getElementById('addUserMessage');
     const userListItems = document.getElementById('userListItems');
+    const activityLogElement = document.getElementById('activityLog');
+    const clearActivityLogBtn = document.getElementById('clearActivityLog');
+    
+    // =====================
+    // Activity Log Functions
+    // =====================
+    
+    // Get activity log from localStorage
+    function getActivityLog() {
+        const stored = localStorage.getItem('activityLog');
+        if (stored) {
+            try {
+                return JSON.parse(stored);
+            } catch (e) {
+                console.warn('Failed to parse activity log');
+            }
+        }
+        return [];
+    }
+    
+    // Save activity log to localStorage
+    function saveActivityLog(activities) {
+        // Keep only last 100 activities to prevent localStorage overflow
+        const limitedActivities = activities.slice(-100);
+        localStorage.setItem('activityLog', JSON.stringify(limitedActivities));
+    }
+    
+    // Add an activity to the log
+    function logActivity(type, message, user) {
+        const activities = getActivityLog();
+        activities.push({
+            type: type,
+            message: message,
+            user: user || getCurrentUser() || 'Unknown',
+            timestamp: Date.now()
+        });
+        saveActivityLog(activities);
+        renderActivityLog();
+    }
+    
+    // Get icon for activity type
+    function getActivityIcon(type) {
+        const icons = {
+            'login': '🔓',
+            'logout': '🔒',
+            'user-add': '👤',
+            'user-remove': '🚫',
+            'file-upload': '📁',
+            'file-remove': '🗑️',
+            'message': '💬'
+        };
+        return icons[type] || '📋';
+    }
+    
+    // Render activity log
+    function renderActivityLog() {
+        const activities = getActivityLog();
+        
+        if (activities.length === 0 || !activityLogElement) {
+            if (activityLogElement) {
+                activityLogElement.innerHTML = '<p class="text-muted">No activity recorded yet.</p>';
+            }
+            return;
+        }
+        
+        // Show newest first
+        const reversed = [...activities].reverse();
+        activityLogElement.innerHTML = reversed.map(activity => `
+            <div class="activity-item activity-${activity.type}">
+                <span class="activity-icon">${getActivityIcon(activity.type)}</span>
+                <div class="activity-content">
+                    <div class="activity-text">${escapeHtml(activity.message)}</div>
+                    <div class="activity-time">${escapeHtml(activity.user)} • ${formatTime(activity.timestamp)}</div>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    // Clear activity log handler
+    if (clearActivityLogBtn) {
+        clearActivityLogBtn.addEventListener('click', function() {
+            if (confirm('Are you sure you want to clear the activity log?')) {
+                localStorage.removeItem('activityLog');
+                renderActivityLog();
+            }
+        });
+    }
     
     // Update UI based on login state
     function updateUI() {
@@ -116,8 +203,10 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 const index = parseInt(this.getAttribute('data-index'));
                 const users = getUsers();
                 if (users.length > 1) {
+                    const removedUser = users[index].username;
                     users.splice(index, 1);
                     saveUsers(users);
+                    logActivity('user-remove', `Removed user "${removedUser}"`);
                     renderUserList();
                 }
             });
@@ -137,6 +226,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             if (user) {
                 sessionStorage.setItem('adminLoggedIn', 'true');
                 sessionStorage.setItem('adminUsername', username);
+                logActivity('login', `User "${username}" logged in`);
                 updateUI();
             } else {
                 loginError.textContent = 'Invalid username or password';
@@ -147,6 +237,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     // Logout handler
     if (logoutBtn) {
         logoutBtn.addEventListener('click', function() {
+            const username = getCurrentUser();
+            logActivity('logout', `User "${username}" logged out`);
             sessionStorage.removeItem('adminLoggedIn');
             sessionStorage.removeItem('adminUsername');
             document.getElementById('username').value = '';
@@ -188,6 +280,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 
                 users.push({ username: newUsername, password: newPassword });
                 saveUsers(users);
+                logActivity('user-add', `Added new user "${newUsername}"`);
                 
                 document.getElementById('newUsername').value = '';
                 document.getElementById('newPassword').value = '';
@@ -280,6 +373,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                     timestamp: Date.now()
                 });
                 saveChatMessages(messages);
+                logActivity('message', `Posted a message: "${text.length > 50 ? text.substring(0, 50) + '...' : text}"`);
                 chatInput.value = '';
                 renderChatMessages();
             }
@@ -372,8 +466,10 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                     return;
                 }
                 
+                const removedFileName = files[index].name;
                 files.splice(index, 1);
                 saveSharedFiles(files);
+                logActivity('file-remove', `Removed file "${removedFileName}"`);
                 renderFileList();
             });
         });
@@ -423,6 +519,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                     // Save when all valid files have been processed
                     if (uploadCount === totalValidFiles) {
                         saveSharedFiles(sharedFiles);
+                        logActivity('file-upload', `Uploaded ${totalValidFiles} file(s)`);
                         renderFileList();
                         fileInput.value = '';
                     }
@@ -439,6 +536,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         if (isLoggedIn()) {
             renderChatMessages();
             renderFileList();
+            renderActivityLog();
         }
     };
     
