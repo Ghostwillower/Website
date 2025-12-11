@@ -85,10 +85,31 @@
                 <button id="logoutBtn" class="btn btn-secondary">Logout</button>
             </div>
 
-            <!-- Admin Tools Placeholder -->
+            <!-- Admin Tools -->
             <div class="admin-tools">
                 <h3>Admin Tools</h3>
-                <p class="text-muted">Tools coming soon...</p>
+                
+                <!-- Chatroom Message Board -->
+                <div class="chatroom">
+                    <h4>Message Board</h4>
+                    <div id="chatMessages" class="chat-messages"></div>
+                    <form id="chatForm" class="chat-form">
+                        <input type="text" id="chatInput" placeholder="Type a message..." required maxlength="500">
+                        <button type="submit" class="btn">Send</button>
+                    </form>
+                </div>
+
+                <!-- File Upload and Sharing -->
+                <div class="file-sharing">
+                    <h4>File Sharing</h4>
+                    <form id="fileUploadForm" class="file-upload-form">
+                        <input type="file" id="fileInput" multiple>
+                        <button type="submit" class="btn">Upload</button>
+                    </form>
+                    <div id="fileList" class="file-list">
+                        <p class="text-muted">No files uploaded yet.</p>
+                    </div>
+                </div>
             </div>
 
             <!-- Credential Management -->
