@@ -162,7 +162,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     
     // Clear activity log handler
     if (clearActivityLogBtn) {
-        clearActivityLogBtn.addEventListener('click', function() {
+        clearActivityLogBtn.addEventListener('click', function(e) {
+            e.preventDefault();
             if (confirm('Are you sure you want to clear the activity log?')) {
                 localStorage.removeItem('activityLog');
                 renderActivityLog();
@@ -192,14 +193,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             const li = document.createElement('li');
             li.innerHTML = `
                 <span>${user.username}</span>
-                ${users.length > 1 ? `<button class="btn-delete" data-index="${index}">Remove</button>` : '<span class="text-muted">(cannot remove last user)</span>'}
+                ${users.length > 1 ? `<button type="button" class="btn-delete" data-index="${index}">Remove</button>` : '<span class="text-muted">(cannot remove last user)</span>'}
             `;
             userListItems.appendChild(li);
         });
         
         // Add delete handlers
         document.querySelectorAll('.btn-delete').forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
                 const index = parseInt(this.getAttribute('data-index'));
                 const users = getUsers();
                 if (users.length > 1) {
@@ -236,7 +238,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     
     // Logout handler
     if (logoutBtn) {
-        logoutBtn.addEventListener('click', function() {
+        logoutBtn.addEventListener('click', function(e) {
+            e.preventDefault();
             const username = getCurrentUser();
             logActivity('logout', `User "${username}" logged out`);
             sessionStorage.removeItem('adminLoggedIn');
@@ -447,7 +450,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 </div>
                 <div class="file-actions">
                     <a href="${downloadHref}" download="${escapeHtml(file.name)}" class="btn-download"${downloadDisabled}>Download</a>
-                    <button class="btn-remove" data-index="${index}">Remove</button>
+                    <button type="button" class="btn-remove" data-index="${index}">Remove</button>
                 </div>
             </div>
         `;
@@ -455,7 +458,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         
         // Add remove handlers
         document.querySelectorAll('.btn-remove').forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
                 const indexAttr = this.getAttribute('data-index');
                 const index = parseInt(indexAttr, 10);
                 const files = getSharedFiles();
