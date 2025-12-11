@@ -2,7 +2,7 @@
 const mobileMenuToggle = document.getElementById('mobileMenuToggle');
 const navLinks = document.querySelector('.nav-links');
 
-if (mobileMenuToggle) {
+if (mobileMenuToggle && navLinks) {
     mobileMenuToggle.addEventListener('click', () => {
         navLinks.classList.toggle('active');
     });
@@ -11,7 +11,9 @@ if (mobileMenuToggle) {
 // Close menu when clicking a link
 document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
+        if (navLinks) {
+            navLinks.classList.remove('active');
+        }
     });
 });
 
