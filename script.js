@@ -339,24 +339,39 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             return;
         }
         
-        fileListElement.innerHTML = files.map((file, index) => `
+        fileListElement.innerHTML = files.map((file, index) => {
+            // Validate data URL to prevent XSS
+            const isValidDataUrl = file.data && typeof file.data === 'string' && file.data.startsWith('data:');
+            const downloadHref = isValidDataUrl ? file.data : '#';
+            const downloadDisabled = !isValidDataUrl ? ' style="pointer-events: none; opacity: 0.5;"' : '';
+            
+            return `
             <div class="file-item">
                 <div class="file-info">
                     <div class="file-name">${escapeHtml(file.name)}</div>
                     <div class="file-meta">${formatFileSize(file.size)} • Uploaded by ${escapeHtml(file.uploadedBy)} • ${formatTime(file.timestamp)}</div>
                 </div>
                 <div class="file-actions">
-                    <a href="${file.data}" download="${escapeHtml(file.name)}" class="btn-download">Download</a>
+                    <a href="${downloadHref}" download="${escapeHtml(file.name)}" class="btn-download"${downloadDisabled}>Download</a>
                     <button class="btn-remove" data-index="${index}">Remove</button>
                 </div>
             </div>
-        `).join('');
+        `;
+        }).join('');
         
         // Add remove handlers
         document.querySelectorAll('.btn-remove').forEach(btn => {
             btn.addEventListener('click', function() {
-                const index = parseInt(this.getAttribute('data-index'));
+                const indexAttr = this.getAttribute('data-index');
+                const index = parseInt(indexAttr, 10);
                 const files = getSharedFiles();
+                
+                // Validate index is a valid number within bounds
+                if (isNaN(index) || index < 0 || index >= files.length) {
+                    console.warn('Invalid file index:', indexAttr);
+                    return;
+                }
+                
                 files.splice(index, 1);
                 saveSharedFiles(files);
                 renderFileList();
@@ -377,6 +392,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             const sharedFiles = getSharedFiles();
             let uploadCount = 0;
             
+            // Count valid files (under size limit)
+            const validFiles = Array.from(files).filter(f => f.size <= 1024 * 1024);
+            const totalValidFiles = validFiles.length;
+            
+            if (totalValidFiles === 0) {
+                // All files were too large
+                return;
+            }
+            
             Array.from(files).forEach(file => {
                 // Limit file size to 1MB for localStorage constraints
                 if (file.size > 1024 * 1024) {
@@ -396,7 +420,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                     });
                     
                     uploadCount++;
-                    if (uploadCount === files.length || uploadCount === Array.from(files).filter(f => f.size <= 1024 * 1024).length) {
+                    // Save when all valid files have been processed
+                    if (uploadCount === totalValidFiles) {
                         saveSharedFiles(sharedFiles);
                         renderFileList();
                         fileInput.value = '';
