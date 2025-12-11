@@ -17,17 +17,25 @@ document.querySelectorAll('.nav-links a').forEach(link => {
     });
 });
 
-// Smooth scroll
+// Smooth scroll with fallback for older browsers
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
             const navHeight = document.querySelector('nav').offsetHeight;
-            window.scrollTo({
-                top: target.offsetTop - navHeight,
-                behavior: 'smooth'
-            });
+            const targetPosition = target.offsetTop - navHeight;
+            
+            // Check if smooth scrolling is supported
+            if ('scrollBehavior' in document.documentElement.style) {
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            } else {
+                // Fallback for browsers that don't support smooth scrolling
+                window.scrollTo(0, targetPosition);
+            }
         }
     });
 });
