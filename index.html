@@ -3,265 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ghostwillower - Developer specializing in automation, gaming tools, and creative projects">
-    <title>Ghostwillower | Developer</title>
+    <meta name="description" content="Ghostwillower - Developer">
+    <title>Ghostwillower</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body data-theme="dark">
-    <!-- Navigation -->
-    <nav class="nav-container">
-        <div class="nav-content">
-            <a href="#home" class="logo">
-                <span class="logo-bracket">&lt;</span>
-                <span class="logo-text">Ghostwillower</span>
-                <span class="logo-bracket">/&gt;</span>
-            </a>
-            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                <span class="theme-icon">🌙</span>
-            </button>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#interests">Interests</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
+<body>
+    <nav>
+        <a href="#home" class="logo">Ghostwillower</a>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">☰</button>
     </nav>
 
-    <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="hero-background"></div>
-        <div class="hero-content">
-            <div class="hero-text-container">
-                <h1 class="hero-title">
-                    <span class="hero-greeting">Hello, I'm</span>
-                    <span class="hero-name">Ghostwillower</span>
-                </h1>
-                <p class="hero-subtitle">
-                    <span class="typing-text">Developer. Gamer. Creator.</span>
-                </p>
-                <div class="hero-buttons">
-                    <a href="#about" class="btn btn-primary">Learn More</a>
-                    <a href="#contact" class="btn btn-secondary">Get in Touch</a>
-                </div>
-            </div>
-            <div class="hero-visual">
-                <div class="floating-card card-1"></div>
-                <div class="floating-card card-2"></div>
-                <div class="floating-card card-3"></div>
-            </div>
-        </div>
-        <button class="scroll-indicator" id="scrollIndicator" aria-label="Scroll to About section">
-            <span>Scroll</span>
-            <div class="scroll-arrow"></div>
-        </button>
+        <h1>Ghostwillower</h1>
+        <p>Developer. Gamer. Creator.</p>
+        <a href="#projects" class="btn">See my work</a>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="section about-section">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p class="about-paragraph">
-                        I'm a developer who loves building tools that automate the tedious and enhance 
-                        the experience. From mobile apps for sleep research to Minecraft assist clients, 
-                        I enjoy tackling diverse technical challenges.
-                    </p>
-                    <p class="about-paragraph">
-                        My projects span TypeScript, Python, Java, and JavaScript. I'm passionate about 
-                        gaming, AI integration, 3D printing automation, and creating modular systems 
-                        that can be extended and customized.
-                    </p>
-                    <div class="about-stats">
-                        <div class="stat-card">
-                            <div class="stat-number">18+</div>
-                            <div class="stat-label">Repositories</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number">5+</div>
-                            <div class="stat-label">Languages</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-number">∞</div>
-                            <div class="stat-label">Ideas</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-visual">
-                    <div class="profile-card">
-                        <div class="profile-image-placeholder">
-                            <span class="profile-initial">G</span>
-                        </div>
-                        <div class="profile-info">
-                            <h3>Ghostwillower</h3>
-                            <p>Developer & Creator</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <section id="about" class="section">
+        <h2>About</h2>
+        <p>
+            I build tools that automate the tedious stuff. From mobile apps to Minecraft mods, 
+            I like solving problems with code.
+        </p>
+        <p>
+            Languages: TypeScript, Python, Java, JavaScript
+        </p>
+    </section>
+
+    <section id="projects" class="section">
+        <h2>Projects</h2>
+        
+        <div class="project">
+            <h3>TMR App</h3>
+            <p>Mobile app for Targeted Memory Reactivation during sleep. Built with React Native.</p>
+            <a href="https://github.com/Ghostwillower/TMR-app" target="_blank">GitHub →</a>
+        </div>
+
+        <div class="project">
+            <h3>Thales Client</h3>
+            <p>Minecraft assist client built on Fabric with Baritone integration.</p>
+            <a href="https://github.com/Ghostwillower/ArMo-client" target="_blank">GitHub →</a>
+        </div>
+
+        <div class="project">
+            <h3>Pc-MCP</h3>
+            <p>MCP servers for AI-driven 3D printing with OpenSCAD and OctoPrint.</p>
+            <a href="https://github.com/Ghostwillower/Pc-MCP" target="_blank">GitHub →</a>
         </div>
     </section>
 
-    <!-- Interests Section -->
-    <section id="interests" class="section interests-section">
-        <div class="container">
-            <h2 class="section-title">What I'm Into</h2>
-            <div class="interests-grid">
-                <div class="interest-card">
-                    <div class="interest-icon">🎮</div>
-                    <h3 class="interest-title">Gaming</h3>
-                    <p class="interest-description">
-                        Building tools and mods for Minecraft and other games
-                    </p>
-                </div>
-                <div class="interest-card">
-                    <div class="interest-icon">🤖</div>
-                    <h3 class="interest-title">Automation</h3>
-                    <p class="interest-description">
-                        Creating systems that automate repetitive tasks
-                    </p>
-                </div>
-                <div class="interest-card">
-                    <div class="interest-icon">📱</div>
-                    <h3 class="interest-title">Mobile Dev</h3>
-                    <p class="interest-description">
-                        Building mobile apps with React Native and Expo
-                    </p>
-                </div>
-                <div class="interest-card">
-                    <div class="interest-icon">🖨️</div>
-                    <h3 class="interest-title">3D Printing</h3>
-                    <p class="interest-description">
-                        Integrating CAD, slicing, and printer control
-                    </p>
-                </div>
-                <div class="interest-card">
-                    <div class="interest-icon">🧠</div>
-                    <h3 class="interest-title">AI Integration</h3>
-                    <p class="interest-description">
-                        Connecting AI models to real-world applications
-                    </p>
-                </div>
-                <div class="interest-card">
-                    <div class="interest-icon">🔧</div>
-                    <h3 class="interest-title">Modular Systems</h3>
-                    <p class="interest-description">
-                        Designing plugin-based architectures
-                    </p>
-                </div>
-            </div>
-        </div>
+    <section id="contact" class="section">
+        <h2>Contact</h2>
+        <p>Find me on <a href="https://github.com/Ghostwillower" target="_blank">GitHub</a></p>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="section projects-section">
-        <div class="container">
-            <h2 class="section-title">Projects & Work</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon">😴</div>
-                        <span class="project-tag">Featured</span>
-                    </div>
-                    <h3 class="project-title">TMR App</h3>
-                    <p class="project-description">
-                        A mobile app for Targeted Memory Reactivation during sleep. Features biometric 
-                        monitoring, audio cue management, and memory testing with safety controls.
-                    </p>
-                    <div class="project-tags">
-                        <span class="tag">TypeScript</span>
-                        <span class="tag">React Native</span>
-                        <span class="tag">Expo</span>
-                    </div>
-                    <a href="https://github.com/Ghostwillower/TMR-app" class="project-link" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon">⚔️</div>
-                        <span class="project-tag">Gaming</span>
-                    </div>
-                    <h3 class="project-title">Thales Client</h3>
-                    <p class="project-description">
-                        An "under the radar" Minecraft assist client built on Fabric. Provides subtle 
-                        quality-of-life enhancements and intelligent automation via Baritone.
-                    </p>
-                    <div class="project-tags">
-                        <span class="tag">Java</span>
-                        <span class="tag">Fabric</span>
-                        <span class="tag">Minecraft</span>
-                    </div>
-                    <a href="https://github.com/Ghostwillower/ArMo-client" class="project-link" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-icon">🖨️</div>
-                        <span class="project-tag">MCP</span>
-                    </div>
-                    <h3 class="project-title">Pc-MCP</h3>
-                    <p class="project-description">
-                        MCP servers enabling AI-driven iterative 3D model design, slicing, and printing. 
-                        Features OpenSCAD integration and OctoPrint control.
-                    </p>
-                    <div class="project-tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">3D Printing</span>
-                        <span class="tag">AI</span>
-                    </div>
-                    <a href="https://github.com/Ghostwillower/Pc-MCP" class="project-link" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="section contact-section">
-        <div class="container">
-            <h2 class="section-title">Let's Connect</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <p class="contact-text">
-                        Interested in collaborating or have questions about my projects? 
-                        Feel free to reach out through GitHub or check out my repositories!
-                    </p>
-                    <div class="social-links">
-                        <a href="https://github.com/Ghostwillower" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                <div class="contact-visual">
-                    <div class="contact-card">
-                        <div class="contact-card-content">
-                            <h3>Let's Build Something</h3>
-                            <p>Check out my GitHub for more projects and contributions.</p>
-                            <div class="contact-decoration">
-                                <div class="decoration-circle"></div>
-                                <div class="decoration-circle"></div>
-                                <div class="decoration-circle"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <p>&copy; 2024 Ghostwillower. Made with ❤️ and code.</p>
-            </div>
-        </div>
+    <footer>
+        <p>© 2024 Ghostwillower</p>
     </footer>
 
     <script src="script.js"></script>
