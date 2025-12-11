@@ -1,5 +1,10 @@
 /* Simple, clean styles */
 
+/* Smooth scroll behavior - works in Chrome, Firefox, Edge, and Safari 15.4+ */
+html {
+    scroll-behavior: smooth;
+}
+
 :root {
     --bg: #0d0d0d;
     --bg-card: #151515;
@@ -414,6 +419,22 @@ footer {
     min-width: 200px;
 }
 
+/* WebKit prefix for older Safari/Chrome */
+.file-upload-form input[type="file"]::-webkit-file-upload-button {
+    padding: 0.5rem 1rem;
+    background: var(--link);
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 0.5rem;
+}
+
+.file-upload-form input[type="file"]::-webkit-file-upload-button:hover {
+    background: var(--link-hover);
+}
+
+/* Standard file selector button */
 .file-upload-form input[type="file"]::file-selector-button {
     padding: 0.5rem 1rem;
     background: var(--link);
