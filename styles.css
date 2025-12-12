@@ -21,6 +21,11 @@ body {
     background: var(--bg);
     color: var(--text);
     line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem;
 }
 
 a {
@@ -31,73 +36,22 @@ a:hover {
     color: var(--link-hover);
 }
 
-/* Nav */
-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: var(--bg);
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--border);
-    z-index: 100;
+/* Main Container */
+.main-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-.logo {
-    font-size: 1.25rem;
-    font-weight: 600;
-    text-decoration: none;
-    color: #fff;
-}
-
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 2rem;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: var(--text-muted);
-}
-
-.nav-links a:hover {
-    color: #fff;
-}
-
-.mobile-menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
-/* Hero */
-.hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+/* Page Header */
+.page-header {
     text-align: center;
-    padding: 2rem;
-}
-
-.hero h1 {
-    font-size: 3rem;
-    color: #fff;
-    margin-bottom: 0.5rem;
-}
-
-.hero p {
-    font-size: 1.25rem;
-    color: var(--text-muted);
     margin-bottom: 2rem;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    color: #fff;
 }
 
 .btn {
@@ -114,58 +68,7 @@ nav {
     color: #fff;
 }
 
-/* Sections */
-.section {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 4rem 2rem;
-}
-
-.section h2 {
-    font-size: 2rem;
-    color: #fff;
-    margin-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 0.5rem;
-}
-
-.section p {
-    margin-bottom: 1rem;
-    color: #b0b0b0;
-}
-
-/* Projects */
-.project {
-    margin-bottom: 2rem;
-    padding: 1.5rem;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-}
-
-.project h3 {
-    font-size: 1.25rem;
-    color: #fff;
-    margin-bottom: 0.5rem;
-}
-
-.project p {
-    margin-bottom: 0.75rem;
-}
-
-.project a {
-    font-size: 0.9rem;
-}
-
-/* Footer */
-footer {
-    text-align: center;
-    padding: 2rem;
-    border-top: 1px solid var(--border);
-    color: var(--text-muted);
-}
-
-/* Admin Section */
+/* Admin Components */
 .admin-login,
 .admin-panel {
     background: var(--bg-card);
@@ -590,27 +493,11 @@ footer {
 
 /* Mobile */
 @media (max-width: 600px) {
-    .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: var(--bg);
-        flex-direction: column;
-        padding: 1rem 2rem;
-        border-bottom: 1px solid var(--border);
+    body {
+        padding: 1rem;
     }
 
-    .nav-links.active {
-        display: flex;
-    }
-
-    .mobile-menu-toggle {
-        display: block;
-    }
-
-    .hero h1 {
+    .page-header h1 {
         font-size: 2rem;
     }
 }
