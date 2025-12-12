@@ -356,6 +356,20 @@
     const fileUploadForm = document.getElementById('fileUploadForm');
     const fileInput = document.getElementById('fileInput');
     const fileListElement = document.getElementById('fileList');
+    const uploadStatusElement = document.getElementById('uploadStatus');
+    
+    // Update upload status display
+    function showUploadStatus(message, type) {
+        if (!uploadStatusElement) return;
+        uploadStatusElement.textContent = message;
+        uploadStatusElement.className = 'upload-status ' + (type || '');
+        if (type === 'success') {
+            setTimeout(() => {
+                uploadStatusElement.textContent = '';
+                uploadStatusElement.className = 'upload-status';
+            }, 3000);
+        }
+    }
     
     // Store file data (base64) in localStorage
     function getSharedFiles() {
@@ -453,10 +467,14 @@
             if (!isLoggedIn()) return;
             
             const files = fileInput.files;
-            if (files.length === 0) return;
+            if (files.length === 0) {
+                showUploadStatus('Please select a file to upload.', 'error');
+                return;
+            }
             
             const sharedFiles = getSharedFiles();
             let uploadCount = 0;
+            let errorCount = 0;
             
             // Count valid files (under size limit)
             const validFiles = Array.from(files).filter(f => f.size <= 1024 * 1024);
@@ -464,13 +482,16 @@
             
             if (totalValidFiles === 0) {
                 // All files were too large
+                showUploadStatus('All selected files exceed the 1MB size limit.', 'error');
                 return;
             }
+            
+            showUploadStatus(`Uploading ${totalValidFiles} file(s)...`, 'uploading');
             
             Array.from(files).forEach(file => {
                 // Limit file size to 1MB for localStorage constraints
                 if (file.size > 1024 * 1024) {
-                    alert(`File "${file.name}" is too large. Maximum size is 1MB.`);
+                    errorCount++;
                     return;
                 }
                 
@@ -492,6 +513,17 @@
                         logActivity('file-upload', `Uploaded ${totalValidFiles} file(s)`);
                         renderFileList();
                         fileInput.value = '';
+                        const msg = errorCount > 0 
+                            ? `Uploaded ${totalValidFiles} file(s). ${errorCount} file(s) skipped (too large).`
+                            : `Successfully uploaded ${totalValidFiles} file(s)!`;
+                        showUploadStatus(msg, 'success');
+                    }
+                };
+                reader.onerror = function() {
+                    errorCount++;
+                    uploadCount++;
+                    if (uploadCount === totalValidFiles) {
+                        showUploadStatus('Some files failed to upload.', 'error');
                     }
                 };
                 reader.readAsDataURL(file);
